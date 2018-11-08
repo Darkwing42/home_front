@@ -1,20 +1,27 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import axios from 'axios';
+import Vue from "vue";
+import Vuex from "vuex";
+import axios from "axios";
+import dashboard from "./modules/dashboard";
+import todo from "./modules/todo";
 
 Vue.use(Vuex);
 
+const URL = "172.19.0.:5000";
+
 const store = new Vuex.Store({
-  modules: {},
+  modules: {
+    dashboard: dashboard,
+    todo: todo
+  },
   state: {
     user: {
-      user_id: '',
-      access_token: '',
-      refresh_token: '',
+      user_id: "",
+      access_token: "",
+      refresh_token: ""
     },
     loggedIn: false,
     loading: true,
-    isAuthenticated: false,
+    isAuthenticated: false
   },
   mutations: {
     setAuth: (state, payload) => {
@@ -22,59 +29,54 @@ const store = new Vuex.Store({
       state.access_token = payload.access_token;
       state.refresh_token = payload.refresh_token;
     },
-    loading: (state) => {
+    loading: state => {
       state.loading = !state.loading;
     },
-    login_success: (state) => {
+    login_success: state => {
       state.isAuthenticated = true;
       state.loggedIn = true;
       state.loading = false;
     },
-    logout: (state) => {
+    logout: state => {
       state.isAuthenticated = false;
       state.loggedIn = false;
-    },
+    }
   },
   actions: {
     REGISTER({ commit }, authData) {
       axios({
-        method: 'post',
-        url: 'http://172.19.0.2:5000/api/v1/register',
+        method: "post",
+        url: "http://172.19.0.2:5000/api/v1/register",
         data: {
           username: authData.username,
-          password: authData.password,
-        },
-        
+          password: authData.password
+        }
       })
-      .then((res) => {
-        console.log(res)
-      }).catch((error) => {
-        console.log(error)
-      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     LOGIN({ commit }, authData) {
       axios({
-        method: 'post',
-        url: 'http://172.19.0.2:5000/api/v1/login',
+        method: "post",
+        url: "http://172.19.0.2:5000/api/v1/login",
         data: {
           username: authData.username,
-          password: authData.password,
+          password: authData.password
         }
       })
-      .then((res) => {
-        console.log(res)
-      }).catch((error) => {
-        console.log(error)
-      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
+  },
 
-    
-    
-
-
-
-},
-  
   getters: {}
 });
 
