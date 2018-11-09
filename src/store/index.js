@@ -19,6 +19,11 @@ const store = new Vuex.Store({
       access_token: "",
       refresh_token: ""
     },
+    userSettings: {
+      weather_service: "",
+      todo_service: "",
+      shopping_service: ""
+    },
     loggedIn: false,
     loading: true,
     isAuthenticated: false
