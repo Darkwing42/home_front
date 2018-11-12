@@ -7,7 +7,7 @@ export default {
     links: []
   },
   actions: {
-    GET_USER_DATA({ commit, rootState }, user_id) {
+    GET_USER_DATA({ commit, rootState }) {
       commit("loading", { root: true });
       axios({
         url: `${APP_URL}/user`,

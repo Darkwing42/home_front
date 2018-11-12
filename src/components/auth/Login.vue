@@ -15,7 +15,7 @@
       label="Password"
       :rules="passwordRules"
     ></v-text-field>
-    <v-btn flat @click="loginUser" class="primary">Login</v-btn>
+    <v-btn flat @click="loginUser();" class="primary">Login</v-btn>
   </v-container>
 </template>
 
@@ -32,15 +32,13 @@ export default {
     ]
   }),
   methods: {
-    loginUser() {
+    loginUser(event) {
       const userData = {
         username: this.username,
         password: this.password
       };
-      this.$store.dispatch("LOGIN", {
-        username: userData.username,
-        password: userData.password
-      });
+      this.$store.state.isAuthenticated = true;
+      this.$router.push("/");
     }
   }
 };

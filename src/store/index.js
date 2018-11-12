@@ -20,15 +20,21 @@ const store = new Vuex.Store({
       refresh_token: ""
     },
     userSettings: {
-      weather_service: "",
-      todo_service: "",
-      shopping_service: ""
+      weather_service: true,
+      todo_service: true,
+      shopping_service: true
     },
-    loggedIn: false,
-    loading: true,
+    loading: false,
     isAuthenticated: false
   },
   mutations: {
+    setUserSettings(state, payload) {
+      state.userSettings.weather_service =
+        payload.user.settings.weather_service;
+      state.userSettings.todo_service = payload.user.settings.todo_service;
+      state.userSettings.shopping_service =
+        payload.user.settings.shopping_service;
+    },
     setAuth: (state, payload) => {
       state.user_id = payload.user_id;
       state.access_token = payload.access_token;
@@ -39,12 +45,11 @@ const store = new Vuex.Store({
     },
     login_success: state => {
       state.isAuthenticated = true;
-      state.loggedIn = true;
+
       state.loading = false;
     },
     logout: state => {
       state.isAuthenticated = false;
-      state.loggedIn = false;
     }
   },
   actions: {
@@ -65,20 +70,12 @@ const store = new Vuex.Store({
         });
     },
     LOGIN({ commit }, authData) {
-      axios({
-        method: "post",
-        url: "http://172.19.0.2:5000/api/v1/login",
-        data: {
-          username: authData.username,
-          password: authData.password
-        }
-      })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      console.log("logging in");
+      commit("loading");
+      commit("login_success");
+      this.$store.state.user_id = authData.username;
+
+      this.$router.push("Dashboard");
     }
   },
 

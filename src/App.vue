@@ -39,13 +39,12 @@ import { mapState } from "vuex";
 
 export default {
   name: "App",
-  computed: {
-    ...mapState({
-      loginState: state => state.loggedIn
-    })
-  },
+  computed: mapState({
+    loginState: state => state.isAuthenticated
+  }),
   methods: {},
   data: () => ({
+    loginSate: "",
     items: [
       { menu: "Einstellungen", links: "/settings" },
       { menu: "Logout", links: "/logout" }
